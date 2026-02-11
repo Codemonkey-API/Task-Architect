@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: task-api
+    ports:
+      - "8000:8000"
+    networks:
+      - architect-net
+
+  frontend:
+    build: ./frontend
+    container_name: task-ui
+    ports:
+      - "5173:5173"
+    networks:
+      - architect-net
+    # This ensures the backend starts first
+    depends_on:
+      - backend
+
+networks:
+  architect-net:
+    driver: bridge
